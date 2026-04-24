@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Afficher EMPLOYÉS {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p class="h3"> Liste des Employés </p>
+            <table class="table table-bordered table-sm">
+            {% if data %}
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">Id</th>
+                        <th class="align-middle">Nom</th>
+                        <th class="align-middle">Prénom</th>
+                        <th class="align-middle">Poste</th>
+                        <th colspan="3" class="text-center align-middle">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for row in data %}
+					<tr>
+						<td class="align-middle">{{ row.id_employe }}</td>
+						<td class="align-middle">{{ row.nom_employe }}</td>
+						<td class="align-middle">{{ row.prenom_employe }}</td>
+						<td class="align-middle">{{ row.post_employe }}</td>
+
+                        <td class="text-center align-middle">
+							<a class="btn btn-primary btn-sm" href="{{ url_for('employe_ajouter_wtf') }}" role="button">Ajouter</a>
+						</td>
+						<td class="text-center align-middle">
+							<a class="btn btn-warning btn-sm" href="{{ url_for('employe_update_wtf', id_employe_btn_edit_html=row.id_employe) }}" role="button">Editer</a>
+						</td>
+						<td class="text-center align-middle">
+							<a class="btn btn-danger btn-sm" href="{{ url_for('employe_delete_wtf', id_employe_btn_delete_html=row.id_employe) }}" role="button">Supprimer</a>
+						</td>
+					</tr>
+                {% endfor %}
+                </tbody>
+            {% else %}
+                {% endif %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}
