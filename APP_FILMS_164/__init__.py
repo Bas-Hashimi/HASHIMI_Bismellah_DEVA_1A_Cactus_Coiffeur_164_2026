@@ -56,6 +56,23 @@ try:
     from APP_FILMS_164.clients import gestion_clients_crud
     from APP_FILMS_164.clients import gestion_clients_wtf_forms
 
+    from APP_FILMS_164.produits import gestion_produits_crud
+    from APP_FILMS_164.produits import gestion_produits_wtf_forms
+
+    from APP_FILMS_164.prestation import gestion_prestation_crud
+    from APP_FILMS_164.prestation import gestion_prestation_wtf_forms
+
+    from APP_FILMS_164.rendez_vous import gestion_rendez_vous_crud
+    from APP_FILMS_164.rendez_vous import gestion_rendez_vous_wtf_forms
+
+    from APP_FILMS_164.vendre import gestion_vendre_crud
+    from APP_FILMS_164.vendre import gestion_vendre_wtf_forms
+
+    from APP_FILMS_164.rdv_prestation import gestion_rdv_prestation_crud
+    from APP_FILMS_164.rdv_prestation import gestion_rdv_prestation_wtf_forms
+
+    from APP_FILMS_164.rdv_employe import gestion_rdv_employe_crud
+    from APP_FILMS_164.rdv_employe import gestion_rdv_employe_wtf_forms
 except Exception as Exception_init_app_films_164:
     print(f"4567756434 Une erreur est survenue {type(Exception_init_app_films_164)} dans"
           f"__init__ {Exception_init_app_films_164.args}")

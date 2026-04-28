@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %} Coiffeurs par RDV {% endblock %}
+{% block body %}
+<div class="container">
+    <h3 class="mt-4">Employés assignés aux Rendez-vous</h3>
+    <table class="table table-bordered table-sm mt-3 table-hover">
+        <a class="btn btn-primary btn-sm" href="{{ url_for('rdv_employe_ajouter_wtf') }}">Associer un autre</a>
+        <thead class="thead-light">
+            <tr>
+                <th>ID RDV</th>
+                <th>Client</th>
+                <th>Date du RDV</th>
+                <th>Coiffeur Assigné</th>
+                <th>Poste</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in data %}
+            <tr>
+                <td>{{ row.id_rdv }}</td>
+                <td>{{ row.prenom_client }} {{ row.nom_client }}</td>
+                <td>{{ row.date_rdv }}</td>
+                <td><strong>{{ row.prenom_employe }} {{ row.nom_employe }}</strong></td>
+                <td>{{ row.post_employe }}</td>
+                <td class="text-center">
+                    <a class="btn btn-danger btn-sm" href="{{ url_for('rdv_employe_delete_wtf', id_rdv_del=row.id_rdv, id_emp_del=row.id_employe) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun employé n'est encore assigné à un rendez-vous.</td>
+                <td class="text-center">
+                    <a class="btn btn-primary btn-sm" href="{{ url_for('rdv_employe_ajouter_wtf') }}">Nouvelle Assignation</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Ajouter une PRESTATION {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Ajouter une nouvelle PRESTATION</p>
+			<form action="" method="POST" novalidate>
+				{{ form.hidden_tag() }}
+				<div class="form-group">
+					<p>
+						{{ form.libelle_wtf.label }}<br>
+						{{ form.libelle_wtf(size=50, class="form-control") }}
+						{% for error in form.libelle_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+					</p>
+					<p>
+						{{ form.prix_wtf.label }}<br>
+						{{ form.prix_wtf(class="form-control") }}
+						{% for error in form.prix_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+					</p>
+					<p>
+						{{ form.duree_wtf.label }}<br>
+						{{ form.duree_wtf(class="form-control") }}
+						{% for error in form.duree_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+					</p>
+				</div>
+				{{ form.submit(class="btn btn-primary") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

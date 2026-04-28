@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %} Effacer une PRESTATION {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Effacer une PRESTATION</p>
+			<form action="" method="POST" novalidate>
+				{{ form_delete.hidden_tag() }}
+
+				{% if data_rdv_associes %}
+					<div class="alert alert-danger" role="alert">
+						<strong>Attention :</strong> Cette prestation est associée à {{ data_rdv_associes|length }} rendez-vous dans l'historique.<br>
+						Sa suppression pourrait échouer en raison des contraintes de la base de données.
+					</div>
+				{% else %}
+					<div class="alert alert-success" role="alert">
+						Cette prestation n'est associée à aucun rendez-vous, elle peut être supprimée en toute sécurité.
+					</div>
+				{% endif %}
+
+				<div class="form-group">
+					<p>
+						{{ form_delete.libelle_delete_wtf.label }}<br>
+						{{ form_delete.libelle_delete_wtf(size=50, readonly=true, class="form-control") }}
+					</p>
+				</div>
+
+				{{ form_delete.submit_btn_conf_del(class="btn btn-info") }}
+
+				{% if btn_submit_del %}
+					{{ form_delete.submit_btn_del(class="btn btn-danger") }}
+				{% endif %}
+
+				{{ form_delete.submit_btn_annuler(class="btn btn-primary") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

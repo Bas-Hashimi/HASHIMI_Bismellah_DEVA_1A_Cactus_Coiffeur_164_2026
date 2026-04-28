@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Afficher PRODUITS {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Liste des Produits du Salon</p>
+            <table class="table table-bordered table-sm">
+                <a class="btn btn-primary" href="{{ url_for('produits_ajouter_wtf') }}" role="button">Ajouter un produit</a>
+
+            {% if data %}
+                <thead>
+                    <tr>
+                        <th class="align-middle">Id</th>
+                        <th class="align-middle">Nom du produit</th>
+                        <th class="align-middle">Stock disponible</th>
+                        <th class="align-middle">Prix unitaire (CHF)</th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {% for row in data %}
+				<tbody>
+					<tr>
+						<td class="align-middle">{{ row.id_produit }}</td>
+						<td class="align-middle">{{ row.nom_produit }}</td>
+						<td class="align-middle">{{ row.quantite_stock }}</td>
+						<td class="align-middle">{{ row.prix_unitaire }}</td>
+
+						<td class="text-center align-middle">
+							<a class="btn btn-warning" href="{{ url_for('produits_update_wtf', id_produit_btn_edit_html=row.id_produit) }}" role="button">Editer</a>
+						</td>
+						<td class="text-center align-middle">
+							<a class="btn btn-danger" href="{{ url_for('produits_delete_wtf', id_produit_btn_delete_html=row.id_produit) }}" role="button">Supprimer</a>
+						</td>
+					</tr>
+				</tbody>
+            {% else %}
+				<tbody>
+					<tr>
+						<td colspan="4">Aucun produit trouvé dans la base de données.</td>
+						<td>
+							<a class="btn btn-primary" href="{{ url_for('produits_ajouter_wtf') }}" role="button">Ajouter un produit</a>
+						</td>
+					</tr>
+				</tbody>
+            {% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

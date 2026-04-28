@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %} Afficher RENDEZ-VOUS {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Liste des Rendez-vous du Salon</p>
+            <table class="table table-bordered table-sm table-hover">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('rendez_vous_ajouter_wtf') }}" role="button">Ajouter un rdv</a>
+            {% if data %}
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">ID RDV</th>
+                        <th class="align-middle">Client</th>
+                        <th class="align-middle">Date du RDV</th>
+                        <th class="align-middle">Annulation</th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {% for row in data %}
+				<tbody>
+					<tr>
+						<td class="align-middle">{{ row.id_rdv }}</td>
+						<td class="align-middle">{{ row.prenom }} {{ row.nom }} (ID: {{ row.id_client }})</td>
+						<td class="align-middle">{{ row.date_rdv }}</td>
+						<td class="align-middle">
+                            {% if row.date_annulation %}
+                                <span class="badge badge-danger">Annulé le {{ row.date_annulation }}</span>
+                            {% else %}
+                                <span class="badge badge-success">Maintenu</span>
+                            {% endif %}
+                        </td>
+
+						<td class="text-center align-middle">
+							<a class="btn btn-warning btn-sm" href="{{ url_for('rendez_vous_update_wtf', id_rdv_btn_edit_html=row.id_rdv) }}" role="button">Editer</a>
+						</td>
+						<td class="text-center align-middle">
+							<a class="btn btn-danger btn-sm" href="{{ url_for('rendez_vous_delete_wtf', id_rdv_btn_delete_html=row.id_rdv) }}" role="button">Supprimer</a>
+						</td>
+					</tr>
+				</tbody>
+            {% else %}
+				<tbody>
+					<tr>
+						<td colspan="4">Aucun rendez-vous trouvé.</td>
+						<td>
+							<a class="btn btn-primary" href="{{ url_for('rendez_vous_ajouter_wtf') }}" role="button">Ajouter un RDV</a>
+						</td>
+					</tr>
+				</tbody>
+            {% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} Afficher VENTES {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Historique des Ventes</p>
+            <table class="table table-bordered table-sm table-hover">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('vendre_ajouter_wtf') }}" role="button">Vendre un produit</a>
+
+            {% if data %}
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">ID Vente</th>
+                        <th class="align-middle">Vendu par (Employé)</th>
+                        <th class="align-middle">Produit</th>
+                        <th class="align-middle">Acheté par (Client)</th>
+                        <th class="align-middle">Quantité</th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {% for row in data %}
+				<tbody>
+					<tr>
+						<td class="align-middle">{{ row.id_vente }}</td>
+						<td class="align-middle">{{ row.prenom_employe }} {{ row.nom_employe }}</td>
+						<td class="align-middle">{{ row.nom_produit }}</td>
+						<td class="align-middle">{{ row.prenom }} {{ row.nom }}</td>
+						<td class="align-middle">{{ row.quantite }}</td>
+
+						<td class="text-center align-middle">
+							<a class="btn btn-warning btn-sm" href="{{ url_for('vendre_update_wtf', id_vente_btn_edit_html=row.id_vente) }}" role="button">Editer</a>
+						</td>
+						<td class="text-center align-middle">
+							<a class="btn btn-danger btn-sm" href="{{ url_for('vendre_delete_wtf', id_vente_btn_delete_html=row.id_vente) }}" role="button">Supprimer</a>
+						</td>
+					</tr>
+				</tbody>
+            {% else %}
+				<tbody>
+					<tr>
+						<td colspan="5">Aucune vente enregistrée.</td>
+						<td>
+							<a class="btn btn-primary" href="{{ url_for('vendre_ajouter_wtf') }}" role="button">Ajouter une Vente</a>
+						</td>
+					</tr>
+				</tbody>
+            {% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

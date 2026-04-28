@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Supprimer Assignation {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 mt-4">
+			<h3>Supprimer l'assignation du Coiffeur</h3>
+			<form action="" method="POST" novalidate class="mt-4">
+				{{ form_delete.hidden_tag() }}
+				<div class="form-group">
+					<p>
+						{{ form_delete.info_rdv_emp_delete_wtf.label }}<br>
+						{{ form_delete.info_rdv_emp_delete_wtf(class="form-control", readonly=true) }}
+					</p>
+				</div>
+				{{ form_delete.submit_btn_conf_del(class="btn btn-warning") }}
+
+				{% if btn_submit_del %}
+					{{ form_delete.submit_btn_del(class="btn btn-danger") }}
+				{% endif %}
+
+				{{ form_delete.submit_btn_annuler(class="btn btn-primary") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

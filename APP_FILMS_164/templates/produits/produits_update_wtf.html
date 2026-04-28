@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Editer un PRODUIT {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Editer un PRODUIT</p>
+			<form action="" method="POST" novalidate>
+				{{ form_update.hidden_tag() }}
+				<div class="form-group">
+					<p>
+						{{ form_update.nom_produit_update_wtf.label }}<br>
+						{{ form_update.nom_produit_update_wtf(size=50, class="form-control") }}
+						{% for error in form_update.nom_produit_update_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+					</p>
+					<p>
+						{{ form_update.quantite_stock_update_wtf.label }}<br>
+						{{ form_update.quantite_stock_update_wtf(class="form-control") }}
+						{% for error in form_update.quantite_stock_update_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+					</p>
+					<p>
+						{{ form_update.prix_unitaire_update_wtf.label }}<br>
+						{{ form_update.prix_unitaire_update_wtf(class="form-control") }}
+						{% for error in form_update.prix_unitaire_update_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
+					</p>
+				</div>
+				{{ form_update.submit(class="btn btn-primary") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

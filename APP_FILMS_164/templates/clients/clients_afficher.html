@@ -8,6 +8,7 @@
 				Liste des Clients
 			</p>
             <table class="table table-bordered table-sm">
+                <a class="btn btn-primary" href="{{ url_for('clients_ajouter_wtf') }}" role="button">Add Client</a>
             {% if data %}
                 <thead>
                     <tr>
@@ -36,9 +37,6 @@
 						</td>
                         <td class="align-middle">
 							{{ row.telephone }}
-						</td>
-						<td class="text-center align-middle">
-							<a class="btn btn-primary" href="{{ url_for('clients_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center align-middle">
 							<a class="btn btn-warning" href="{{ url_for('clients_update_wtf', id_client_btn_edit_html=row.id_client) }}" role="button">Edit</a>

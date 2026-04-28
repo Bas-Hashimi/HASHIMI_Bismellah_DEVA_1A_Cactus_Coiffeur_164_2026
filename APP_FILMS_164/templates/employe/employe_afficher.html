@@ -6,6 +6,8 @@
 		<div class="col-md-12">
 			<p class="h3"> Liste des Employés </p>
             <table class="table table-bordered table-sm">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('employe_ajouter_wtf') }}" role="button">Add Employe</a>
+
             {% if data %}
                 <thead class="thead-light">
                     <tr>
@@ -23,10 +25,6 @@
 						<td class="align-middle">{{ row.nom_employe }}</td>
 						<td class="align-middle">{{ row.prenom_employe }}</td>
 						<td class="align-middle">{{ row.post_employe }}</td>
-
-                        <td class="text-center align-middle">
-							<a class="btn btn-primary btn-sm" href="{{ url_for('employe_ajouter_wtf') }}" role="button">Ajouter</a>
-						</td>
 						<td class="text-center align-middle">
 							<a class="btn btn-warning btn-sm" href="{{ url_for('employe_update_wtf', id_employe_btn_edit_html=row.id_employe) }}" role="button">Editer</a>
 						</td>

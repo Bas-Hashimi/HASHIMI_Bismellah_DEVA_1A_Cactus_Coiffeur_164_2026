@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Afficher PRESTATIONS {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Liste des Prestations du Salon</p>
+            <table class="table table-bordered table-sm">
+                <a class="btn btn-primary" href="{{ url_for('prestations_ajouter_wtf') }}" role="button">Ajouter un préstation</a>
+
+            {% if data %}
+                <thead>
+                    <tr>
+                        <th class="align-middle">Id</th>
+                        <th class="align-middle">Libellé de la prestation</th>
+                        <th class="align-middle">Prix (CHF)</th>
+                        <th class="align-middle">Durée (min)</th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+                    </tr>
+                </thead>
+            {% endif %}
+
+            {% for row in data %}
+				<tbody>
+					<tr>
+						<td class="align-middle">{{ row.id_prestation }}</td>
+						<td class="align-middle">{{ row.libelle }}</td>
+						<td class="align-middle">{{ row.prix }}</td>
+						<td class="align-middle">{{ row.duree }}</td>
+
+						<td class="text-center align-middle">
+							<a class="btn btn-warning" href="{{ url_for('prestations_update_wtf', id_prestation_btn_edit_html=row.id_prestation) }}" role="button">Editer</a>
+						</td>
+						<td class="text-center align-middle">
+							<a class="btn btn-danger" href="{{ url_for('prestations_delete_wtf', id_prestation_btn_delete_html=row.id_prestation) }}" role="button">Supprimer</a>
+						</td>
+					</tr>
+				</tbody>
+            {% else %}
+				<tbody>
+					<tr>
+						<td colspan="4">Aucune prestation trouvée dans la base de données.</td>
+						<td>
+							<a class="btn btn-primary" href="{{ url_for('prestations_ajouter_wtf') }}" role="button">Ajouter une prestation</a>
+						</td>
+					</tr>
+				</tbody>
+            {% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

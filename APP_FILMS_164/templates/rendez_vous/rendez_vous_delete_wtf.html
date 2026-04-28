@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Effacer un RDV {% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>Effacer définitivement un Rendez-vous</p>
+			<form action="" method="POST" novalidate>
+				{{ form_delete.hidden_tag() }}
+
+                <div class="alert alert-warning" role="alert">
+                    <strong>Attention :</strong> La suppression de ce rendez-vous effacera également toutes les prestations et tous les employés associés à ce rendez-vous !
+                </div>
+
+				<div class="form-group">
+					<p>
+						{{ form_delete.info_rdv_delete_wtf.label }}<br>
+						{{ form_delete.info_rdv_delete_wtf(class="form-control", readonly=true) }}
+					</p>
+				</div>
+				{{ form_delete.submit_btn_conf_del(class="btn btn-info") }}
+
+				{% if btn_submit_del %}
+					{{ form_delete.submit_btn_del(class="btn btn-danger") }}
+				{% endif %}
+
+				{{ form_delete.submit_btn_annuler(class="btn btn-primary") }}
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
