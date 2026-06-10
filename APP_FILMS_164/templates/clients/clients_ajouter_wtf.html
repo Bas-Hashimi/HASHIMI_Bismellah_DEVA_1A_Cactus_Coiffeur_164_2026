@@ -1,40 +1,70 @@
 {% extends "base.html" %}
 {% block title %} Ajouter un CLIENT {% endblock %}
+
 {% block body %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p>
-				Ajouter un nouveau CLIENT (WTForms)
-			</p>
-			<form action="" method="POST" novalidate>
-				{{ form.hidden_tag() }}
-				<div class="form-group">
-					<p>
-						{{ form.nom_client_wtf.label }}<br>
-						{{ form.nom_client_wtf(size=32) }}<br>
-						{% for error in form.nom_client_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-                    <p>
-						{{ form.prenom_client_wtf.label }}<br>
-						{{ form.prenom_client_wtf(size=32) }}<br>
-						{% for error in form.prenom_client_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-                    <p>
-						{{ form.telephone_client_wtf.label }}<br>
-						{{ form.telephone_client_wtf(size=32) }}<br>
-						{% for error in form.telephone_client_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-				</div>
-				{{ form.submit(class="btn btn-primary") }}
-			</form>
-		</div>
-	</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <!-- Conteneur avec bordure néon turquoise et fond sombre transparent -->
+            <div class="p-4 rounded shadow-lg" style="border: 2px solid #00f2ff; background-color: rgba(255, 255, 255, 0.05);">
+                <h3 class="text-center mb-4" style="color: #ff00ff; text-shadow: 1px 1px 10px #ff00ff;">Ajouter un nouveau client</h3>
+
+                <form action="" method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <!-- Champ NOM -->
+                    <div class="mb-3">
+                        {{ form.nom_client_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.nom_client_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Nom de famille") }}
+                        {% for error in form.nom_client_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Champ PRÉNOM -->
+                    <div class="mb-3">
+                        {{ form.prenom_client_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.prenom_client_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Prénom") }}
+                        {% for error in form.prenom_client_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Champ TÉLÉPHONE -->
+                    <div class="mb-4">
+                        {{ form.telephone_client_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.telephone_client_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="06 XX XX XX XX") }}
+                        {% for error in form.telephone_client_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Bouton Submit Vert Néon -->
+                    <div class="d-grid gap-2 pt-3">
+                        {{ form.submit(class="btn fw-bold", style="background: linear-gradient(90deg, #32ff7e, #3ae374); color: white; border: none; box-shadow: 0 0 15px #32ff7e;") }}
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Petit ajustement pour que le placeholder soit lisible sur le fond violet */
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-size: 0.9rem;
+    }
+
+    /* Retire l'effet bleu par défaut de Bootstrap au clic pour garder le style néon */
+    .form-control:focus {
+        background-color: #2b1055 !important;
+        border-color: #00f2ff !important;
+        color: white !important;
+        box-shadow: 0 0 10px #00f2ff;
+        outline: none;
+    }
+</style>
 {% endblock %}

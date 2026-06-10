@@ -1,55 +1,123 @@
 {% extends "base.html" %}
 {% block title %} Afficher PRESTATIONS {% endblock %}
+
 {% block body %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p>Liste des Prestations du Salon</p>
-            <table class="table table-bordered table-sm">
-                <a class="btn btn-primary" href="{{ url_for('prestations_ajouter_wtf') }}" role="button">Ajouter un préstation</a>
+<div class="container mt-5">
+    <div class="row">
+       <div class="col-md-12">
+          <!-- Titre avec effet néon cyan -->
+          <h3 class="mb-4 text-uppercase tracking-wider" style="color: #00f2ff; text-shadow: 0 0 15px #00f2ff; letter-spacing: 2px;">
+              Liste des Prestations du Salon
+          </h3>
 
-            {% if data %}
-                <thead>
-                    <tr>
-                        <th class="align-middle">Id</th>
-                        <th class="align-middle">Libellé de la prestation</th>
-                        <th class="align-middle">Prix (CHF)</th>
-                        <th class="align-middle">Durée (min)</th>
-                        <th class="align-middle"></th>
-                        <th class="align-middle"></th>
-                        <th class="align-middle"></th>
+          <!-- Bouton Ajouter style néon rose -->
+          <div class="mb-4">
+              <a class="btn btn-add-neon btn-sm px-4 fw-bold" href="{{ url_for('prestations_ajouter_wtf') }}">
+                 + AJOUTER UNE PRESTATION
+              </a>
+          </div>
+
+          <div class="table-responsive">
+              <table class="table table-borderless align-middle" style="color: white; border-collapse: separate; border-spacing: 0 12px;">
+                {% if data %}
+                   <thead>
+                        <!-- Header Turquoise Néon avec texte noir pour un contraste maximal -->
+                        <tr style="background-color: #00f2ff; color: #000000; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1.5px; font-weight: 800; box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);">
+                            <th class="py-3 ps-4" style="border-radius: 10px 0 0 10px;">ID</th>
+                            <th class="py-3">LIBELLÉ</th>
+                            <th class="py-3">PRIX (CHF)</th>
+                            <th class="py-3">DURÉE (MIN)</th>
+                            <th colspan="2" class="text-center py-3" style="border-radius: 0 10px 10px 0;">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in data %}
+                    <tr class="prestation-row">
+                       <td class="py-3 ps-4" style="border-left: 4px solid #00f2ff; border-radius: 4px 0 0 4px;">
+                           {{ row.id_prestation }}
+                       </td>
+                       <td class="fw-bold">{{ row.libelle }}</td>
+                       <td class="text-info">{{ row.prix }}</td>
+                       <td>{{ row.duree }}</td>
+
+                       <td class="text-center" style="width: 150px;">
+                          <a class="btn btn-edit-neon btn-sm w-100 fw-bold"
+                             href="{{ url_for('prestations_update_wtf', id_prestation_btn_edit_html=row.id_prestation) }}">
+                             EDITER
+                          </a>
+                       </td>
+
+                       <td class="text-center" style="width: 150px;">
+                          <a class="btn btn-delete-neon btn-sm w-100 fw-bold"
+                             href="{{ url_for('prestations_delete_wtf', id_prestation_btn_delete_html=row.id_prestation) }}">
+                             SUPPRIMER
+                          </a>
+                       </td>
                     </tr>
-                </thead>
-            {% endif %}
-
-            {% for row in data %}
-				<tbody>
-					<tr>
-						<td class="align-middle">{{ row.id_prestation }}</td>
-						<td class="align-middle">{{ row.libelle }}</td>
-						<td class="align-middle">{{ row.prix }}</td>
-						<td class="align-middle">{{ row.duree }}</td>
-
-						<td class="text-center align-middle">
-							<a class="btn btn-warning" href="{{ url_for('prestations_update_wtf', id_prestation_btn_edit_html=row.id_prestation) }}" role="button">Editer</a>
-						</td>
-						<td class="text-center align-middle">
-							<a class="btn btn-danger" href="{{ url_for('prestations_delete_wtf', id_prestation_btn_delete_html=row.id_prestation) }}" role="button">Supprimer</a>
-						</td>
-					</tr>
-				</tbody>
-            {% else %}
-				<tbody>
-					<tr>
-						<td colspan="4">Aucune prestation trouvée dans la base de données.</td>
-						<td>
-							<a class="btn btn-primary" href="{{ url_for('prestations_ajouter_wtf') }}" role="button">Ajouter une prestation</a>
-						</td>
-					</tr>
-				</tbody>
-            {% endfor %}
-			</table>
-		</div>
-	</div>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <p class="text-muted italic">Aucune prestation trouvée dans la base de données.</p>
+                                <a class="btn btn-add-neon btn-sm px-4 fw-bold" href="{{ url_for('prestations_ajouter_wtf') }}">Ajouter</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+              </table>
+          </div>
+       </div>
+    </div>
 </div>
+
+<style>
+    /* Styles pour maintenir la cohérence avec le thème Néon */
+    .prestation-row {
+        background-color: rgba(255, 255, 255, 0.03);
+        transition: all 0.3s ease;
+    }
+
+    .prestation-row:hover {
+        background-color: rgba(0, 242, 255, 0.08) !important;
+        transform: translateX(5px);
+    }
+
+    .btn-add-neon {
+        border: 2px solid #ff00ff;
+        color: #ff00ff;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-add-neon:hover {
+        background: #ff00ff;
+        color: white;
+        box-shadow: 0 0 20px #ff00ff;
+    }
+
+    .btn-edit-neon {
+        border: 1px solid #ff9f43;
+        color: #ff9f43;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-edit-neon:hover {
+        background: #ff9f43;
+        color: black;
+        box-shadow: 0 0 15px #ff9f43;
+    }
+
+    .btn-delete-neon {
+        border: 1px solid #ee5253;
+        color: #ee5253;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-delete-neon:hover {
+        background: #ee5253;
+        color: white;
+        box-shadow: 0 0 15px #ee5253;
+    }
+</style>
 {% endblock %}

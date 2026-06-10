@@ -1,59 +1,52 @@
 {% extends "base.html" %}
-{% block title %} Ajouter VENTE {% endblock %}
+{% block title %} Ajouter une Prestation au RDV {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-7 col-lg-6">
 
-            <!-- Conteneur style néon Cyberpunk -->
             <div class="p-4 rounded shadow-lg" style="border: 2px solid #00f2ff; background-color: rgba(255, 255, 255, 0.05);">
-                <h3 class="text-center mb-4" style="color: #ff00ff; text-shadow: 1px 1px 10px #ff00ff;">Enregistrer une nouvelle vente</h3>
+                <h3 class="text-center mb-4" style="color: #ff00ff; text-shadow: 1px 1px 10px #ff00ff;">Ajouter une Prestation</h3>
 
                 <form action="" method="POST" novalidate>
                     {{ form.hidden_tag() }}
 
-                    <!-- Sélection EMPLOYÉ -->
                     <div class="mb-3">
-                        {{ form.id_employe_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
-                        {{ form.id_employe_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
-                        {% for error in form.id_employe_wtf.errors %}
+                        {{ form.id_rdv_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.id_rdv_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
+                        {% for error in form.id_rdv_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                        <div class="form-text text-white-50">Sélectionnez le créneau et le client concerné.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.id_prestation_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.id_prestation_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
+                        {% for error in form.id_prestation_wtf.errors %}
                             <div class="text-warning small">[{{ error }}]</div>
                         {% endfor %}
                     </div>
 
-                    <!-- Sélection PRODUIT -->
-                    <div class="mb-3">
-                        {{ form.id_produit_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
-                        {{ form.id_produit_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
-                        {% for error in form.id_produit_wtf.errors %}
-                            <div class="text-warning small">[{{ error }}]</div>
-                        {% endfor %}
-                    </div>
-
-                    <!-- Sélection CLIENT -->
-                    <div class="mb-3">
-                        {{ form.id_client_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
-                        {{ form.id_client_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
-                        {% for error in form.id_client_wtf.errors %}
-                            <div class="text-warning small">[{{ error }}]</div>
-                        {% endfor %}
-                    </div>
-
-                    <!-- Champ QUANTITÉ -->
                     <div class="mb-4">
                         {{ form.quantite_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
-                        {{ form.quantite_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Nombre d'unités") }}
+                        {{ form.quantite_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Par défaut: 1") }}
                         {% for error in form.quantite_wtf.errors %}
                             <div class="text-warning small">[{{ error }}]</div>
                         {% endfor %}
                     </div>
 
-                    <!-- Bouton Submit Vert Néon -->
                     <div class="d-grid gap-2 pt-3">
                         {{ form.submit(class="btn fw-bold", style="background: linear-gradient(90deg, #32ff7e, #3ae374); color: white; border: none; box-shadow: 0 0 15px #32ff7e;") }}
                     </div>
                 </form>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('rdv_prestation_afficher') }}" class="text-decoration-none" style="color: #00f2ff;">
+                    <i class="bi bi-arrow-left"></i> Retour à la liste
+                </a>
             </div>
 
         </div>
@@ -61,7 +54,7 @@
 </div>
 
 <style>
-    /* Uniformisation des menus déroulants pour le thème sombre */
+    /* Uniformisation des menus déroulants */
     select.form-control option {
         background-color: #2b1055;
         color: white;

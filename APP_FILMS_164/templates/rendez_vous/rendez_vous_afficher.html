@@ -1,60 +1,140 @@
 {% extends "base.html" %}
 {% block title %} Afficher RENDEZ-VOUS {% endblock %}
+
 {% block body %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p>Liste des Rendez-vous du Salon</p>
-            <table class="table table-bordered table-sm table-hover">
-                <a class="btn btn-primary btn-sm" href="{{ url_for('rendez_vous_ajouter_wtf') }}" role="button">Ajouter un rdv</a>
-            {% if data %}
-                <thead class="thead-light">
-                    <tr>
-                        <th class="align-middle">ID RDV</th>
-                        <th class="align-middle">Client</th>
-                        <th class="align-middle">Date du RDV</th>
-                        <th class="align-middle">Annulation</th>
-                        <th class="align-middle"></th>
-                        <th class="align-middle"></th>
-                        <th class="align-middle"></th>
-                    </tr>
-                </thead>
-            {% endif %}
+<div class="container mt-5">
+    <div class="row">
+       <div class="col-md-12">
+          <!-- Titre avec effet néon cyan -->
+          <h3 class="mb-4 text-uppercase tracking-wider" style="color: #00f2ff; text-shadow: 0 0 15px #00f2ff; letter-spacing: 2px;">
+              Liste des Rendez-vous du Salon
+          </h3>
 
-            {% for row in data %}
-				<tbody>
-					<tr>
-						<td class="align-middle">{{ row.id_rdv }}</td>
-						<td class="align-middle">{{ row.prenom }} {{ row.nom }} (ID: {{ row.id_client }})</td>
-						<td class="align-middle">{{ row.date_rdv }}</td>
-						<td class="align-middle">
+          <!-- Bouton Ajouter style néon rose -->
+          <div class="mb-4">
+              <a class="btn btn-add-neon btn-sm px-4 fw-bold" href="{{ url_for('rendez_vous_ajouter_wtf') }}">
+                 + AJOUTER UN RENDEZ-VOUS
+              </a>
+          </div>
+
+          <div class="table-responsive">
+              <table class="table table-borderless align-middle" style="color: white; border-collapse: separate; border-spacing: 0 12px;">
+                {% if data %}
+                   <thead>
+                        <!-- Header Turquoise Néon -->
+                        <tr style="background-color: #00f2ff; color: #000000; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1.5px; font-weight: 800; box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);">
+                            <th class="py-3 ps-4" style="border-radius: 10px 0 0 10px;">ID RDV</th>
+                            <th class="py-3">CLIENT</th>
+                            <th class="py-3">DATE DU RDV</th>
+                            <th class="py-3">STATUT</th>
+                            <th colspan="2" class="text-center py-3" style="border-radius: 0 10px 10px 0;">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in data %}
+                    <tr class="rdv-row">
+                       <td class="py-3 ps-4" style="border-left: 4px solid #00f2ff; border-radius: 4px 0 0 4px;">
+                           {{ row.id_rdv }}
+                       </td>
+                       <td class="fw-bold">
+                           {{ row.prenom }} {{ row.nom }}
+                           <small class="d-block text-muted" style="font-size: 0.7rem;">ID: {{ row.id_client }}</small>
+                       </td>
+                       <td class="text-info">{{ row.date_rdv }}</td>
+                       <td>
                             {% if row.date_annulation %}
-                                <span class="badge badge-danger">Annulé le {{ row.date_annulation }}</span>
+                                <span class="badge bg-danger text-white border-0" style="box-shadow: 0 0 8px #ee5253;">Annulé le {{ row.date_annulation }}</span>
                             {% else %}
-                                <span class="badge badge-success">Maintenu</span>
+                                <span class="badge bg-success text-white border-0" style="box-shadow: 0 0 8px #10ac84;">Maintenu</span>
                             {% endif %}
-                        </td>
+                       </td>
 
-						<td class="text-center align-middle">
-							<a class="btn btn-warning btn-sm" href="{{ url_for('rendez_vous_update_wtf', id_rdv_btn_edit_html=row.id_rdv) }}" role="button">Editer</a>
-						</td>
-						<td class="text-center align-middle">
-							<a class="btn btn-danger btn-sm" href="{{ url_for('rendez_vous_delete_wtf', id_rdv_btn_delete_html=row.id_rdv) }}" role="button">Supprimer</a>
-						</td>
-					</tr>
-				</tbody>
-            {% else %}
-				<tbody>
-					<tr>
-						<td colspan="4">Aucun rendez-vous trouvé.</td>
-						<td>
-							<a class="btn btn-primary" href="{{ url_for('rendez_vous_ajouter_wtf') }}" role="button">Ajouter un RDV</a>
-						</td>
-					</tr>
-				</tbody>
-            {% endfor %}
-			</table>
-		</div>
-	</div>
+                       <td class="text-center" style="width: 150px;">
+                          <a class="btn btn-edit-neon btn-sm w-100 fw-bold"
+                             href="{{ url_for('rendez_vous_update_wtf', id_rdv_btn_edit_html=row.id_rdv) }}">
+                             EDITER
+                          </a>
+                       </td>
+
+                       <td class="text-center" style="width: 150px;">
+                          <a class="btn btn-delete-neon btn-sm w-100 fw-bold"
+                             href="{{ url_for('rendez_vous_delete_wtf', id_rdv_btn_delete_html=row.id_rdv) }}">
+                             SUPPRIMER
+                          </a>
+                       </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <p class="text-muted italic">Aucun rendez-vous trouvé dans la base de données.</p>
+                                <a class="btn btn-add-neon btn-sm px-4 fw-bold" href="{{ url_for('rendez_vous_ajouter_wtf') }}">Ajouter</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+              </table>
+          </div>
+       </div>
+    </div>
 </div>
+
+<style>
+    /* Styles harmonisés avec le thème Prestations */
+    .rdv-row {
+        background-color: rgba(255, 255, 255, 0.03);
+        transition: all 0.3s ease;
+    }
+
+    .rdv-row:hover {
+        background-color: rgba(0, 242, 255, 0.08) !important;
+        transform: translateX(5px);
+    }
+
+    .btn-add-neon {
+        border: 2px solid #ff00ff;
+        color: #ff00ff;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-add-neon:hover {
+        background: #ff00ff;
+        color: white;
+        box-shadow: 0 0 20px #ff00ff;
+    }
+
+    .btn-edit-neon {
+        border: 1px solid #ff9f43;
+        color: #ff9f43;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-edit-neon:hover {
+        background: #ff9f43;
+        color: black;
+        box-shadow: 0 0 15px #ff9f43;
+    }
+
+    .btn-delete-neon {
+        border: 1px solid #ee5253;
+        color: #ee5253;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-delete-neon:hover {
+        background: #ee5253;
+        color: white;
+        box-shadow: 0 0 15px #ee5253;
+    }
+
+    /* Correction pour Bootstrap 4/5 badges */
+    .badge {
+        padding: 0.5em 0.8em;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+    }
+</style>
 {% endblock %}

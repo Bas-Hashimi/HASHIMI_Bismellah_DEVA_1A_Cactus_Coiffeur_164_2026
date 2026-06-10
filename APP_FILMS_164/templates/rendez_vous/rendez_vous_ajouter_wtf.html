@@ -1,27 +1,72 @@
 {% extends "base.html" %}
 {% block title %} Ajouter un RDV {% endblock %}
+
 {% block body %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p>Planifier un nouveau Rendez-vous</p>
-			<form action="" method="POST" novalidate>
-				{{ form.hidden_tag() }}
-				<div class="form-group">
-					<p>
-						{{ form.id_client_wtf.label }}<br>
-						{{ form.id_client_wtf(class="form-control") }}
-						{% for error in form.id_client_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
-					</p>
-					<p>
-						{{ form.date_rdv_wtf.label }}<br>
-						{{ form.date_rdv_wtf(class="form-control") }}
-						{% for error in form.date_rdv_wtf.errors %}<span style="color: red;">[{{ error }}]</span>{% endfor %}
-					</p>
-				</div>
-				{{ form.submit(class="btn btn-primary") }}
-			</form>
-		</div>
-	</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <!-- Conteneur style néon Cyberpunk -->
+            <div class="p-4 rounded shadow-lg" style="border: 2px solid #00f2ff; background-color: rgba(255, 255, 255, 0.05);">
+                <h3 class="text-center mb-4" style="color: #ff00ff; text-shadow: 1px 1px 10px #ff00ff;">Planifier un RDV</h3>
+
+                <form action="" method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <!-- Champ CLIENT (ID ou Liste) -->
+                    <div class="mb-3">
+                        {{ form.id_client_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.id_client_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
+                        {% for error in form.id_client_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Champ DATE DU RDV -->
+                    <div class="mb-4">
+                        {{ form.date_rdv_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.date_rdv_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;") }}
+                        {% for error in form.date_rdv_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Bouton Submit Vert Néon -->
+                    <div class="d-grid gap-2 pt-3">
+                        {{ form.submit(class="btn fw-bold", style="background: linear-gradient(90deg, #32ff7e, #3ae374); color: white; border: none; box-shadow: 0 0 15px #32ff7e;") }}
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Style pour le texte d'aide ou placeholder */
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Effet de focus turquoise */
+    .form-control:focus {
+        background-color: #2b1055 !important;
+        border-color: #00f2ff !important;
+        color: white !important;
+        box-shadow: 0 0 10px #00f2ff;
+        outline: none;
+    }
+
+    /* Pour que les options des listes déroulantes restent lisibles sur le fond sombre */
+    select.form-control option {
+        background-color: #2b1055;
+        color: white;
+    }
+
+    /* Style spécifique pour l'icône de calendrier si le champ est de type 'date' */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1); /* Rend l'icône blanche pour le fond sombre */
+        cursor: pointer;
+    }
+</style>
 {% endblock %}

@@ -1,57 +1,126 @@
 {% extends "base.html" %}
 {% block title %} Afficher VENTES {% endblock %}
+
 {% block body %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p>Historique des Ventes</p>
-            <table class="table table-bordered table-sm table-hover">
-                <a class="btn btn-primary btn-sm" href="{{ url_for('vendre_ajouter_wtf') }}" role="button">Vendre un produit</a>
+<div class="container mt-5">
+    <div class="row">
+       <div class="col-md-12">
+          <!-- Titre Néon Turquoise -->
+          <h3 class="mb-4 text-uppercase tracking-wider" style="color: #00f2ff; text-shadow: 0 0 15px #00f2ff; letter-spacing: 2px;">
+              Historique des Ventes du Salon
+          </h3>
 
-            {% if data %}
-                <thead class="thead-light">
-                    <tr>
-                        <th class="align-middle">ID Vente</th>
-                        <th class="align-middle">Vendu par (Employé)</th>
-                        <th class="align-middle">Produit</th>
-                        <th class="align-middle">Acheté par (Client)</th>
-                        <th class="align-middle">Quantité</th>
-                        <th class="align-middle"></th>
-                        <th class="align-middle"></th>
-                        <th class="align-middle"></th>
+          <!-- Bouton Vendre style néon rose -->
+          <div class="mb-4">
+              <a class="btn btn-add-neon btn-sm px-4 fw-bold" href="{{ url_for('vendre_ajouter_wtf') }}">
+                 + VENDRE UN PRODUIT
+              </a>
+          </div>
+
+          <div class="table-responsive">
+              <table class="table table-borderless align-middle" style="color: white; border-collapse: separate; border-spacing: 0 12px;">
+                {% if data %}
+                   <thead>
+                        <!-- Header Turquoise Néon avec texte noir -->
+                        <tr style="background-color: #00f2ff; color: #000000; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1.5px; font-weight: 800; box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);">
+                            <th class="py-3 ps-4" style="border-radius: 10px 0 0 10px;">ID</th>
+                            <th class="py-3">Vendu par</th>
+                            <th class="py-3">Produit</th>
+                            <th class="py-3">Client</th>
+                            <th class="py-3">Quantité</th>
+                            <th colspan="2" class="text-center py-3" style="border-radius: 0 10px 10px 0;">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in data %}
+                    <tr class="sale-row">
+                       <td class="py-3 ps-4" style="border-left: 4px solid #00f2ff; border-radius: 4px 0 0 4px;">
+                           {{ row.id_vente }}
+                       </td>
+                       <td class="fw-bold">{{ row.prenom_employe }} {{ row.nom_employe }}</td>
+                       <td style="color: #00f2ff;">{{ row.nom_produit }}</td>
+                       <td>{{ row.prenom }} {{ row.nom }}</td>
+                       <td class="text-center fw-bold" style="background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                           {{ row.quantite }}
+                       </td>
+
+                       <td class="text-center" style="width: 150px;">
+                          <a class="btn btn-edit-neon btn-sm w-100 fw-bold"
+                             href="{{ url_for('vendre_update_wtf', id_vente_btn_edit_html=row.id_vente) }}">
+                             EDITER
+                          </a>
+                       </td>
+
+                       <td class="text-center" style="width: 150px;">
+                          <a class="btn btn-delete-neon btn-sm w-100 fw-bold"
+                             href="{{ url_for('vendre_delete_wtf', id_vente_btn_delete_html=row.id_vente) }}">
+                             SUPPRIMER
+                          </a>
+                       </td>
                     </tr>
-                </thead>
-            {% endif %}
-
-            {% for row in data %}
-				<tbody>
-					<tr>
-						<td class="align-middle">{{ row.id_vente }}</td>
-						<td class="align-middle">{{ row.prenom_employe }} {{ row.nom_employe }}</td>
-						<td class="align-middle">{{ row.nom_produit }}</td>
-						<td class="align-middle">{{ row.prenom }} {{ row.nom }}</td>
-						<td class="align-middle">{{ row.quantite }}</td>
-
-						<td class="text-center align-middle">
-							<a class="btn btn-warning btn-sm" href="{{ url_for('vendre_update_wtf', id_vente_btn_edit_html=row.id_vente) }}" role="button">Editer</a>
-						</td>
-						<td class="text-center align-middle">
-							<a class="btn btn-danger btn-sm" href="{{ url_for('vendre_delete_wtf', id_vente_btn_delete_html=row.id_vente) }}" role="button">Supprimer</a>
-						</td>
-					</tr>
-				</tbody>
-            {% else %}
-				<tbody>
-					<tr>
-						<td colspan="5">Aucune vente enregistrée.</td>
-						<td>
-							<a class="btn btn-primary" href="{{ url_for('vendre_ajouter_wtf') }}" role="button">Ajouter une Vente</a>
-						</td>
-					</tr>
-				</tbody>
-            {% endfor %}
-			</table>
-		</div>
-	</div>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <p class="text-muted italic">Aucune vente enregistrée dans la base de données.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+              </table>
+          </div>
+       </div>
+    </div>
 </div>
+
+<style>
+    /* Styles Cohérents Cyberpunk */
+    .sale-row {
+        background-color: rgba(255, 255, 255, 0.03);
+        transition: all 0.3s ease;
+    }
+
+    .sale-row:hover {
+        background-color: rgba(0, 242, 255, 0.08) !important;
+        transform: translateX(5px);
+    }
+
+    .btn-add-neon {
+        border: 2px solid #ff00ff;
+        color: #ff00ff;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-add-neon:hover {
+        background: #ff00ff;
+        color: white;
+        box-shadow: 0 0 20px #ff00ff;
+    }
+
+    .btn-edit-neon {
+        border: 1px solid #ff9f43;
+        color: #ff9f43;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-edit-neon:hover {
+        background: #ff9f43;
+        color: black;
+        box-shadow: 0 0 15px #ff9f43;
+    }
+
+    .btn-delete-neon {
+        border: 1px solid #ee5253;
+        color: #ee5253;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-delete-neon:hover {
+        background: #ee5253;
+        color: white;
+        box-shadow: 0 0 15px #ee5253;
+    }
+</style>
 {% endblock %}

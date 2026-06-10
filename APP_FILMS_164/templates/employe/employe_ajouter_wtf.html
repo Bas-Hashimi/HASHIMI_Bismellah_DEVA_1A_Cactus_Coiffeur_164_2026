@@ -1,40 +1,50 @@
 {% extends "base.html" %}
 {% block title %} Ajouter un EMPLOYÉ (WTF) {% endblock %}
+
 {% block body %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p>
-				Ajouter un nouvel EMPLOYÉ (WTForms)
-			</p>
-			<form action="" method="POST" novalidate>
-				{{ form.hidden_tag() }}
-				<div class="form-group">
-					<p>
-						{{ form.nom_employe_wtf.label }}<br>
-						{{ form.nom_employe_wtf(size=32) }}<br>
-						{% for error in form.nom_employe_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-					<p>
-						{{ form.prenom_employe_wtf.label }}<br>
-						{{ form.prenom_employe_wtf(size=32) }}<br>
-						{% for error in form.prenom_employe_wtf.errors %}
-							<span style="color: red;">[{{ error }}]</span>
-						{% endfor %}
-					</p>
-                    <p>
-    {{ form.post_employe_wtf.label }}<br>
-    {{ form.post_employe_wtf(size=32) }}<br>
-    {% for error in form.post_employe_wtf.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-</p>
-				</div>
-				{{ form.submit(class="btn btn-primary") }}
-			</form>
-		</div>
-	</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <!-- Formulaire avec bordure néon turquoise et fond transparent/sombre -->
+            <div class="p-4 rounded shadow-lg" style="border: 2px solid #00f2ff; background-color: rgba(255, 255, 255, 0.05);">
+                <h3 class="text-center mb-4" style="color: #ff00ff; text-shadow: 1px 1px 10px #ff00ff;">Ajouter un employé</h3>
+
+                <form action="" method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="mb-3">
+                        {{ form.nom_employe_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.nom_employe_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Nom de famille") }}
+                        {% for error in form.nom_employe_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.prenom_employe_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.prenom_employe_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Prénom") }}
+                        {% for error in form.prenom_employe_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form.post_employe_wtf.label(class="form-label fw-bold", style="color: #00f2ff;") }}
+                        {{ form.post_employe_wtf(class="form-control", style="background-color: #2b1055; border: 1px solid #ff00ff; color: white;", placeholder="Poste actuel") }}
+                        {% for error in form.post_employe_wtf.errors %}
+                            <div class="text-warning small">[{{ error }}]</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Bouton Enregistrer avec l'effet dégradé/néon de ton image -->
+                    <div class="d-grid gap-2 pt-3">
+                        {{ form.submit(class="btn fw-bold", style="background: linear-gradient(90deg, #32ff7e, #3ae374); color: white; border: none; box-shadow: 0 0 15px #32ff7e;") }}
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -1,34 +1,107 @@
 {% extends "base.html" %}
+{% block title %} Prestations par RDV {% endblock %}
+
 {% block body %}
-<div class="container">
-    <h3 class="mt-4">Prestations par Rendez-vous</h3>
-    <table class="table table-bordered table-sm mt-3">
-        <thead class="thead-dark">
-            <tr>
-                <th>Client</th>
-                <th>Date RDV</th>
-                <th>Prestation</th>
-                <th>Quantité</th>
-                <th>Prix (CHF)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for row in data %}
-            <tr>
-                <td>{{ row.prenom }} {{ row.nom }}</td>
-                <td>{{ row.date_rdv }}</td>
-                <td>{{ row.libelle }}</td>
-                <td>{{ row.quantite }}</td>
-                <td>{{ row.prix_prestation }}</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="{{ url_for('rdv_prestation_ajouter_wtf') }}">Ajouter</a>
-                    </td>
-            </tr>
-        {% else %}
-            <tr><td colspan="6">Aucune prestation liée.</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="container mt-5">
+    <div class="row">
+       <div class="col-md-12">
+          <!-- Titre Néon Turquoise -->
+          <h3 class="mb-4 text-uppercase tracking-wider" style="color: #00f2ff; text-shadow: 0 0 15px #00f2ff; letter-spacing: 2px;">
+              Prestations par Rendez-vous
+          </h3>
+
+          <!-- Bouton Ajouter style néon rose -->
+          <div class="mb-4">
+              <a class="btn btn-add-neon btn-sm px-4 fw-bold" href="{{ url_for('rdv_prestation_ajouter_wtf') }}">
+                 + AJOUTER UNE PRESTATION
+              </a>
+          </div>
+
+          <div class="table-responsive">
+              <table class="table table-borderless align-middle" style="color: white; border-collapse: separate; border-spacing: 0 12px;">
+                {% if data %}
+                   <thead>
+                        <!-- Header Turquoise Néon avec texte noir -->
+                        <tr style="background-color: #00f2ff; color: #000000; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1.5px; font-weight: 800; box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);">
+                            <th class="py-3 ps-4" style="border-radius: 10px 0 0 10px;">CLIENT</th>
+                            <th class="py-3">DATE RDV</th>
+                            <th class="py-3">PRESTATION</th>
+                            <th class="py-3">QUANTITÉ</th>
+                            <th class="py-3">PRIX (CHF)</th>
+                            <th class="text-center py-3" style="border-radius: 0 10px 10px 0;">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in data %}
+                    <tr class="service-row">
+                       <td class="py-3 ps-4" style="border-left: 4px solid #00f2ff; border-radius: 4px 0 0 4px;">
+                           {{ row.prenom }} {{ row.nom }}
+                       </td>
+                       <td class="text-info">{{ row.date_rdv }}</td>
+                       <td><strong style="color: #00f2ff;">{{ row.libelle }}</strong></td>
+                       <td>{{ row.quantite }}</td>
+                       <td class="fw-bold" style="color: #32ff7e;">{{ row.prix_prestation }}</td>
+
+                       <td class="text-center">
+                          <a class="btn btn-action-neon btn-sm px-3 fw-bold" href="{{ url_for('rdv_prestation_ajouter_wtf') }}">
+                             AJOUTER
+                          </a>
+                       </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <p class="text-muted italic mb-3">Aucune prestation n'est encore liée à un rendez-vous.</p>
+                                <a class="btn btn-add-neon btn-sm" href="{{ url_for('rdv_prestation_ajouter_wtf') }}">Lier une prestation</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+              </table>
+          </div>
+       </div>
+    </div>
 </div>
+
+<style>
+    /* Styles cohérents Cyberpunk/Néon */
+    .service-row {
+        background-color: rgba(255, 255, 255, 0.03);
+        transition: all 0.3s ease;
+    }
+
+    .service-row:hover {
+        background-color: rgba(0, 242, 255, 0.08) !important;
+        transform: translateX(5px);
+    }
+
+    /* Bouton Ajouter (Rose) */
+    .btn-add-neon {
+        border: 2px solid #ff00ff;
+        color: #ff00ff;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-add-neon:hover {
+        background: #ff00ff;
+        color: white;
+        box-shadow: 0 0 20px #ff00ff;
+    }
+
+    /* Bouton Action dans le tableau (Turquoise) */
+    .btn-action-neon {
+        border: 1px solid #00f2ff;
+        color: #00f2ff;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-action-neon:hover {
+        background: #00f2ff;
+        color: #000;
+        box-shadow: 0 0 15px #00f2ff;
+    }
+</style>
 {% endblock %}
